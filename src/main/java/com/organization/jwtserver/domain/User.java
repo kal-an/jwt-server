@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @AllArgsConstructor
 @Setter
 @Getter
@@ -15,4 +17,5 @@ public class User {
     private String password;
     private String firstname;
     private String lastname;
+    private Set<Role> roles;
 }
