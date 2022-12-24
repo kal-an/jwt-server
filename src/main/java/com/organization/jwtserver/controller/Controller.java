@@ -1,7 +1,10 @@
 package com.organization.jwtserver.controller;
 
+import com.organization.jwtserver.domain.JwtAuthentication;
+import com.organization.jwtserver.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,13 +16,16 @@ public class Controller {
 
     private final AuthService authService;
 
-    @GetMapping("auth/user")
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("greeting/user")
     public ResponseEntity<String> apiUser() {
-        return ResponseEntity.ok("");
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello " + authInfo.getPrincipal());
     }
 
-    @GetMapping("auth/user")
+    @GetMapping("greeting/admin")
     public ResponseEntity<String> apiAdmin() {
-        return ResponseEntity.ok("");
+        final JwtAuthentication authInfo = authService.getAuthInfo();
+        return ResponseEntity.ok("Hello " + authInfo.getPrincipal());
     }
 }
