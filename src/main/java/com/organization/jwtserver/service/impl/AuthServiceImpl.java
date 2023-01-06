@@ -9,6 +9,7 @@ import com.organization.jwtserver.service.AuthService;
 import com.organization.jwtserver.service.JwtProvider;
 import com.organization.jwtserver.service.UserService;
 import io.jsonwebtoken.Claims;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
     private final Map<String, String> refreshStorage = new HashMap<>();
 
     @Override
-    public JwtResponse login(JwtRequest authRequest) {
+    public JwtResponse login(@NonNull JwtRequest authRequest) {
         final User user = userService.getUserByLogin(authRequest.getLogin())
                 .orElseThrow(() -> new AuthException("User not found"));
         if (user.getPassword().equals(authRequest.getPassword())) {
@@ -39,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtResponse getAccessToken(String refreshToken) {
+    public JwtResponse getAccessToken(@NonNull String refreshToken) {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String login = claims.getSubject();
@@ -55,7 +56,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public JwtResponse refresh(String refreshToken) {
+    public JwtResponse refresh(@NonNull String refreshToken) {
         if (jwtProvider.validateRefreshToken(refreshToken)) {
             final Claims claims = jwtProvider.getRefreshClaims(refreshToken);
             final String login = claims.getSubject();
