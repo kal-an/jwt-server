@@ -13,6 +13,7 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -25,13 +26,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "first_name")
     private String firstname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "last_name")
     private String lastname;
 
     @ElementCollection
-    @Column(nullable = false)
+    @CollectionTable(
+            name = "roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(nullable = false, name = "role")
     private Set<Role> roles;
 }
