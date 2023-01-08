@@ -38,5 +38,5 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id")
     )
     @Column(nullable = false, name = "role")
-    private Set<Role> roles;
+    private Set<String> roles;
 }
