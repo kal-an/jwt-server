@@ -76,7 +76,7 @@ public class JwtProviderImpl implements JwtProvider {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
                     .build()
-                    .parseClaimsJwt(token);
+                    .parseClaimsJws(token);
             return true;
         } catch (ExpiredJwtException expEx) {
             log.error("Token expired", expEx);
@@ -107,7 +107,7 @@ public class JwtProviderImpl implements JwtProvider {
         return Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 }
