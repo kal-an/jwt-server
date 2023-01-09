@@ -23,6 +23,7 @@ public class Controller {
         return ResponseEntity.ok("Hello " + authInfo.getPrincipal());
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("greeting/admin")
     public ResponseEntity<String> apiAdmin() {
         final JwtAuthentication authInfo = authService.getAuthInfo();
